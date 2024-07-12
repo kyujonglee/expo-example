@@ -7,6 +7,7 @@ export default function SignUpScreen() {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' });
   const handleSignIn = async () => {
     try {
+      console.log('sign in click!');
       const { createdSessionId, setActive } = await startOAuthFlow({
         redirectUrl: Linking.createURL('(tabs)'),
       });
@@ -20,7 +21,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, marginTop: 100 }}>
       <View>
         <Button title="Sign In" onPress={handleSignIn} />
       </View>
