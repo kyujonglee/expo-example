@@ -1,7 +1,7 @@
 import { useOAuth } from '@clerk/clerk-expo';
 import * as Linking from 'expo-linking';
 import * as React from 'react';
-import { Button, View } from 'react-native';
+import { Button, SafeAreaView, View } from 'react-native';
 
 export default function SignUpScreen() {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' });
@@ -20,8 +20,10 @@ export default function SignUpScreen() {
   };
 
   return (
-    <View>
-      <Button title="Sign In" onPress={handleSignIn} />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View>
+        <Button title="Sign In" onPress={handleSignIn} />
+      </View>
+    </SafeAreaView>
   );
 }
