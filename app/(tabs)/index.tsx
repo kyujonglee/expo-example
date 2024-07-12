@@ -1,22 +1,31 @@
-import { Stack } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
+import { Link, useRouter } from 'expo-router';
+import { Text, View } from 'react-native';
 
-import { ScreenContent } from '~/components/ScreenContent';
+export default function Page() {
+  const { user, isSignedIn } = useUser();
+  const { signOut } = useAuth();
+  const router = useRouter();
+  console.log('home', isSignedIn);
 
-export default function Home() {
   return (
-    <>
-      <Stack.Screen options={{ title: 'Tab One' }} />
-      <View style={styles.container}>
-        <ScreenContent path="app/(tabs)/index.tsx" title="Tab One" />
-      </View>
-    </>
+    <View>
+      <Text>isSignedIn : {isSignedIn ? 'true' : 'false'}</Text>
+      <SignedIn>
+        <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+        <Text
+          onPress={async () => {
+            await signOut();
+            router.replace('/sign-in');
+          }}>
+          SignOut~
+        </Text>
+      </SignedIn>
+      <SignedOut>
+        <Link href="/sign-in" replace>
+          <Text>Sign In</Text>
+        </Link>
+      </SignedOut>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-  },
-});
